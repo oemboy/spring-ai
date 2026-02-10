@@ -1,0 +1,10 @@
+{
+  "body": {
+    "orderCategory": "JUDGE",
+    "appointUserId": "testuser0123456"
+  },
+  "pageInfo": {
+    "pageSize": 10,
+    "currentPageNum": 1
+  }
+}

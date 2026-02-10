@@ -1,0 +1,11 @@
+{
+  "header": {
+    "menuId": "OCAResource"
+  },
+  "body": [
+    {
+      "dictId": "three",
+      "groupId": "OPT_FIBERCORE_NUM"
+    }
+  ]
+}

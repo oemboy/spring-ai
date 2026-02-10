@@ -1,0 +1,25 @@
+[
+  {
+    "request": {
+      "uri": "/get",
+      "queries": {
+        "param": "zw"
+      }
+    },
+    "response": {
+      "json":
+      {
+        "name": "barb"
+      },
+      "headers": {
+        "SelfHeader": "SelfHeader"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": "/test"
+    },
+    "redirectTo": "http://www.baidu.com"
+  }
+]

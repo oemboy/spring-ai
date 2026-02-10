@@ -1,0 +1,25 @@
+[
+  {
+    "request": {
+      "uri": "/uac-sso-app/app_login_out",
+      "method": "post"
+    },
+    "response": {
+      "json": {
+        "svcRetCont": {
+          "result": {
+            "token": null
+          }
+        },
+        "tcpCont": {
+          "rspCode": "0",
+          "rspMsg": "成功",
+          "appID": "NN2018091017372770596301477117952",
+          "messageID": "2018113014503402632822",
+          "rspTime": "2019-02-22 17:44:37",
+          "serviceKey": "app_login"
+        }
+      }
+    }
+  }
+]

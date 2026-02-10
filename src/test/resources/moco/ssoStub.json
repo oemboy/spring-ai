@@ -1,0 +1,44 @@
+[
+  {
+    "request": {
+      "uri": "/PAOOS/aaaa/userservice/getUserInfo.do",
+      "method": "get"
+    },
+    "response": {
+      "json": {
+        "admin": false,
+        "attribute1": "",
+        "attribute2": "",
+        "attribute5": "update",
+        "category": "PRO",
+        "commonPwdUse": true,
+        "createDate": "2016-01-01 06:08:40",
+        "createPerson": "root",
+        "createType": 1,
+        "deleteFlag": false,
+        "email": "test1@chinaunicom.cn",
+        "fax": "",
+        "job": "",
+        "jobNum": "",
+        "lastUpdateDate": "2020-11-03 15:22:54",
+        "lastUpdatePerson": "root-hn",
+        "mobilePhone": "15100000000",
+        "orgCode": "220004702",
+        "orgID": 128350,
+        "passWord": "",
+        "personType": 0,
+        "professional": "",
+        "pwdDeadDate": 1613351870000,
+        "pwdUpdateDate": 1605575870000,
+        "remark": "",
+        "sex": 1,
+        "telephone": "86-898-36634398",
+        "trueName": "测试1",
+        "ucloudOrgCode": "00460024208",
+        "ucloudOrgName": "海南省分公司网络公司运行维护部网络管理中心网络调度室",
+        "userId": 123456,
+        "userName": "test1"
+      }
+    }
+  }
+]

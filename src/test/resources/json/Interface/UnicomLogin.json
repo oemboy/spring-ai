@@ -1,0 +1,18 @@
+{
+  "tcpCont": {
+    "appID": "NN201909031646301168123456789",
+    "serviceKey": "app_login",
+    "messageID": "2019091009420643692548343",
+    "reqTime": "2024-04-07 16:28:01",
+    "signature": "GRVJ3eGxT6RZ3Z+7KcpxPPDtCWsjrC0Uw3rpmFz1CLDwLcV1Ognz3jzkSOTHBLEoDUKT0XXL4/dIEiu4WvJsrn4uRMT7j5xC3JB1GbSXOJVwuP9/lmtaJhBrQ6Yol7InJN4/xajuKl82mDRLjyRmvyIMu3/s+e1HTnBqDaX7+dk="
+  },
+  "svcCont": {
+    "parameters": {
+      "appID": "NN201909031646301168123456789",
+      "messageID": "2019091009420643692548343",
+      "staffID": "chen001",
+      "passWord": "123456",
+      "provinceCode": "0021"
+    }
+  }
+}

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    status : 这个用于设置log4j2自身内部的信息输出,可以不设置,当设置成trace时,会看到log4j2内部各种详细输出
+    monitorInterval : Log4j能够自动检测修改配置文件和重新配置本身, 设置间隔秒数。此处表示每隔600秒重读一次配置文件
+-->
+<Configuration status="ERROR" monitorInterval="600">
+
+    <!--日志级别：TRACE < DEBUG < INFO < WARN < ERROR < FATAL-->
+    <!--如果设置为WARN，则低于WARN的信息都不会输出-->
+    <Properties>
+        <!-- 配置日志文件输出目录,此处为项目根目录下的logs文件夹 -->
+        <Property name="LOG_HOME">/logs/vector</Property>
+        <property name="FILE_NAME">${env:POD_NAME:-vector}</property>
+    </Properties>
+
+    <Appenders>
+        <!--这个输出控制台的配置-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!--控制台只输出level及其以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!--日志输出的格式-->
+            <!--
+                %d{yyyy-MM-dd HH:mm:ss, SSS} : 日志生产时间,输出到毫秒的时间
+                %-5level : 输出日志级别，-5表示左对齐并且固定输出5个字符，如果不足在右边补0
+                %c : logger的名称(%logger)
+                %t : 输出当前线程名称
+                %p : 日志输出格式
+                %m : 日志内容，即 logger.info("message")
+                %n : 换行符
+                %C : Java类名(%F)
+                %L : 行号
+                %M : 方法名
+                %l : 输出语句所在的行数, 包括类名、方法名、文件名、行数
+                hostName : 本地机器名
+                hostAddress : 本地ip地址
+             -->
+            <PatternLayout charset="utf-8"
+                           pattern="%d{yyyy-MM-dd 'at' HH:mm:ss.SSS}|%t|%X{TRANSIDO}|%-5level|%class{36}|%L|%M|%msg%xEx%n"/>
+        </Console>
+        <!--
+            循环日志文件：日志文件大于阀值的时候，就开始写一个新的日志文件
+            这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档
+
+            fileName    : 指定当前日志文件的位置和文件名称
+            filePattern : 指定当发生Rolling时，文件的转移和重命名规则
+            SizeBasedTriggeringPolicy : 指定当文件体积大于size指定的值时，触发Rolling
+            DefaultRolloverStrategy : 指定最多保存的文件个数
+            TimeBasedTriggeringPolicy : 这个配置需要和filePattern结合使用
+                注意filePattern中配置的文件重命名规则是${FILE_NAME}_%d{yyyy-MM-dd}_%i，最小的时间粒度是dd，即天，
+                TimeBasedTriggeringPolicy指定的size是1，结合起来就是每1天生成一个新文件
+        -->
+
+        <RollingRandomAccessFile name="BizLog" fileName="${LOG_HOME}/${FILE_NAME}.log"
+                                 filePattern="${LOG_HOME}/${FILE_NAME}_%d{yyyy-MM-dd}_%i.log.gz">
+            <Filters>
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout charset="utf-8"
+                           pattern="%d{yyyy-MM-dd 'at' HH:mm:ss.SSS}|%t|%X{TRANSIDO}|%-5level|%class{36}|%L|%M|%msg%xEx%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingRandomAccessFile>
+
+        <!--错误信息记录-->
+        <RollingRandomAccessFile name="ERRORLog" fileName="${LOG_HOME}/${FILE_NAME}-ERROR.log"
+                                 filePattern="${LOG_HOME}/${FILE_NAME}-ERROR_%d{yyyy-MM-dd}_%i.log.gz">
+            <Filters>
+                <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout charset="utf-8"
+                           pattern="%d{yyyy-MM-dd 'at' HH:mm:ss.SSS}|%t|%X{TRANSIDO}|%-5level|%class{36}|%L|%M|%msg%xEx%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="1MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+
+
+        <Routing name="DFXCustomLog">
+            <Routes pattern="$${ctx:DFXLogName}">
+                <Route>
+                    <RollingFile name="Rolling-${ctx:DFXLogName}" fileName="${LOG_HOME}/trace/${ctx:DFXLogName}"
+                                 filePattern="${LOG_HOME}/${ctx:DFXLogName}-%d{yyyyMMddHH}-%i.gz">
+                        <DynamicThresholdFilter key="DFXLog" defaultThreshold="FATAL" onMatch="ACCEPT"
+                                                onMismatch="DENY">
+                            <KeyValuePair key="DebugType" value="DEBUG"/>
+                            <KeyValuePair key="OffType" value="OFF"/>
+                        </DynamicThresholdFilter>
+                        <PatternLayout
+                                pattern="%d{yyyy-MM-dd 'at' HH:mm:ss.SSS}|%t|%X{TRANSIDO}|%-5level|%class{36}|%L|%M|%msg%xEx%n"/>
+                        <Policies>
+                            <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                            <SizeBasedTriggeringPolicy size="50MB"/>
+                        </Policies>
+                    </RollingFile>
+                </Route>
+                <Route ref="ERRORLog" key="$${ctx:DFXLogName}"/>
+            </Routes>
+            <IdlePurgePolicy timeToLive="5" timeUnit="minutes"/>
+        </Routing>
+
+    </Appenders>
+
+    <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
+    <Loggers>
+        <logger name="net.platform" level="INFO" additivity="false">
+            <!-- 需额外查看spring mybatics 等日志到控制台, 并可修改Console Appender为DEBUG级别 start-->
+            <AppenderRef ref="Console"/>
+            <!-- 需额外要查看spring mybatics 等日志到控制台, , 并可修改Console Appender为DEBUG级别 end-->
+            <Appender-Ref ref="DFXCustomLog"/>
+        </logger>
+
+        <logger name="com.dimpt.information" level="DEBUG" additivity="false">
+            <!-- 需额外查看spring mybatics 等日志到控制台, 并可修改Console Appender为DEBUG级别 start-->
+            <AppenderRef ref="Console"/>
+            <!-- 需额外要查看spring mybatics 等日志到控制台, , 并可修改Console Appender为DEBUG级别 end-->
+            <Appender-Ref ref="DFXCustomLog"/>
+        </logger>
+
+        <logger name="org.springframework" level="INFO" additivity="false">
+            <!-- 需额外查看spring mybatics 等日志到控制台, 并可修改Console Appender为DEBUG级别 start-->
+            <AppenderRef ref="Console"/>
+            <!-- 需额外要查看spring mybatics 等日志到控制台, , 并可修改Console Appender为DEBUG级别 end-->
+            <Appender-Ref ref="DFXCustomLog"/>
+        </logger>
+
+        <logger name="net.platform.center.util.SqlStatementInterceptor" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+            <Appender-Ref ref="DFXCustomLog"/>
+        </logger>
+
+        <logger name="net.platform.center.cfg.http5.HttpClientLogInterceptor" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+            <Appender-Ref ref="DFXCustomLog"/>
+        </logger>
+
+        <logger name="net.platform.center.sm.common" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+            <Appender-Ref ref="DFXCustomLog"/>
+        </logger>
+
+        <logger name="com.dimpt.information.mapper" level="ERROR" additivity="false">
+            <AppenderRef ref="Console"/>
+            <Appender-Ref ref="DFXCustomLog"/>
+        </logger>
+
+        <logger name="com.dimpt.information.system.interceptor.HttpAuthInterceptor" level="DEBUG" additivity="false">
+            <Appender-Ref ref="DFXCustomLog"/>
+            <AppenderRef ref="Console"/>
+        </logger>
+
+        <Root level="ERROR">
+            <!-- 需额外查看spring mybatics 等日志到控制台, 并可修改Console Appender为DEBUG级别 start-->
+            <AppenderRef ref="Console"/>
+            <!-- 需额外要查看spring mybatics 等日志到控制台, , 并可修改Console Appender为DEBUG级别 end-->
+            <Appender-Ref ref="DFXCustomLog"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

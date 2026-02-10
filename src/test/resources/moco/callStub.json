@@ -1,0 +1,11 @@
+[
+  {
+    "request": {
+      "uri": "/web/call",
+      "method": "post"
+    },
+    "response": {
+      "text": "call@ok"
+    }
+  }
+]

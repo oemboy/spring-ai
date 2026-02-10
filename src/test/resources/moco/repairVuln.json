@@ -1,0 +1,14 @@
+[
+  {
+    "request": {
+      "uri": "/asm/v2/workorder/updateWeakness",
+      "method": "post"
+    },
+    "response": {
+      "json": {
+        "status": "200",
+        "message": "success"
+      }
+    }
+  }
+]

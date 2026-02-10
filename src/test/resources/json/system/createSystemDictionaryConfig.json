@@ -1,0 +1,13 @@
+{
+  "header": {
+    "menuId": "OCAResource"
+  },
+  "body": {
+    "state": 1,
+    "dictName": "测试",
+    "groupName": "测试组",
+    "dictId": "testId",
+    "groupId": "testGroupId",
+    "sort": 1
+  }
+}

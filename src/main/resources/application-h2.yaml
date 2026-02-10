@@ -1,0 +1,14 @@
+spring:
+  docker:
+    compose:
+      enabled: true
+      # 每次停止应用时，自动关掉 Docker 容器（可选）
+      lifecycle-management: start_and_stop
+      # 指定读取哪个 compose 文件
+      file: compose.yaml
+  flyway:
+    enabled: true
+    clean-disabled: false
+    schemas: ailab, public
+    # 开发环境下，让 Flyway 自动对齐刚才启动的容器
+    locations: classpath:db/migration

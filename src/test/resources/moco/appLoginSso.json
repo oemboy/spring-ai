@@ -1,0 +1,25 @@
+[
+  {
+    "request": {
+      "uri": "/uac-sso-app/app_login",
+      "method": "post"
+    },
+    "response": {
+      "json": {
+        "svcRetCont": {
+          "result": {
+            "token": "VMwzO0xH8zk8wQYu5C7Sc1X2d0S4q0aa3UJwE3ne0zs9b23htY68jwDXVlNAWohw2vR4OCrMw2XEpcV5a7GcPa7YWm8pSQgV2Or3nSSg2wn2jDWbeLmydIMib51QOXk5"
+          }
+        },
+        "tcpCont": {
+          "rspCode": "0",
+          "rspMsg": "成功",
+          "appID": "NN2018091017372770596301477117952",
+          "messageID": "2018113014503402632822",
+          "rspTime": "2019-02-22 17:44:37",
+          "serviceKey": "app_login"
+        }
+      }
+    }
+  }
+]

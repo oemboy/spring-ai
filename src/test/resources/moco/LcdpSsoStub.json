@@ -1,0 +1,23 @@
+[
+  {
+    "request": {
+      "uri": "/lcdp-sso-server/ssoInside/getUserInfo",
+      "method": "post"
+    },
+    "response": {
+      "json": {
+        "code":"0000",
+        "message":"成功",
+        "body":{
+          "userId":"1234567890",
+          "userName":"张三",
+          "loginId":"zhangs",
+          "email":"zhangs@chinaunicom.cn",
+          "phone":"15668381322",
+          "orgId":"10",
+          "orgName":"贵州省分公司"
+        }
+      }
+    }
+  }
+]
