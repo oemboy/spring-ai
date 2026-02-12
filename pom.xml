@@ -163,7 +163,6 @@
             <artifactId>spring-boot-docker-compose</artifactId>
             <optional>true</optional>
         </dependency>
-
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-database-postgresql</artifactId>
@@ -188,6 +187,7 @@
     </dependencyManagement>
 
     <build>
+        <finalName>spring-ai</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -198,7 +198,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <!--suppress UnresolvedMavenProperty ${surefireArgLine} -->
-                    <argLine>-Xms512m -Xmx3072m -Dfile.encoding=UTF-8 -XX:+EnableDynamicAgentLoading -Xshare:off</argLine>
+                    <argLine>-Xms512m -Xmx3072m -Dfile.encoding=UTF-8 -XX:+EnableDynamicAgentLoading -Xshare:off
+                    </argLine>
                     <parallel>classes</parallel>
                     <threadCount>4</threadCount>
                     <excludedGroups>mysql,integration</excludedGroups>
