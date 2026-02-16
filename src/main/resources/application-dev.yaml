@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/rag_db?currentSchema=ailab
+    username: rag_user
+    password: Abc110430#
+  data:
+    redis:
+      host: localhost
+      port: 6379

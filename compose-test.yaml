@@ -1,0 +1,25 @@
+services:
+  pgvector-db-test:
+    #    image: 'timescale/timescaledb-ha:pg18.1-ts2.25.0'
+    image: 'pgvector/pgvector:pg18-trixie'
+    labels:
+      - "org.springframework.boot.service-connection=postgres"
+    ports:
+      - "5432"
+    environment:
+      - 'POSTGRES_DB=ailab'
+      - 'POSTGRES_PASSWORD=Abc110430#'
+      - 'POSTGRES_USER=rag_user'
+      - 'TZ=Asia/Shanghai'
+      # Patroni 相关配置
+  #      - 'PATRONI_SCOPE=postgre-cluster'
+  #      - 'PATRONI_STANDBY_CLUSTER=false'
+  redis-test:
+    image: 'redis:8.6.0-alpine'
+    labels:
+      - "org.springframework.boot.service-connection=redis"
+    ports:
+      - "6379"
+    environment:
+      - 'TZ=Asia/Shanghai'
+

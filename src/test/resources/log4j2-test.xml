@@ -42,13 +42,7 @@
 
     <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
     <Loggers>
-        <logger name="net.platform" level="INFO" additivity="false">
-            <!-- 需额外查看spring mybatics 等日志到控制台, 并可修改Console Appender为DEBUG级别 start-->
-            <AppenderRef ref="Console"/>
-            <!-- 需额外要查看spring mybatics 等日志到控制台, , 并可修改Console Appender为DEBUG级别 end-->
-        </logger>
-
-        <logger name="com.dimpt.information" level="INFO" additivity="false">
+        <logger name="net.platform.ai" level="DEBUG" additivity="false">
             <!-- 需额外查看spring mybatics 等日志到控制台, 并可修改Console Appender为DEBUG级别 start-->
             <AppenderRef ref="Console"/>
             <!-- 需额外要查看spring mybatics 等日志到控制台, , 并可修改Console Appender为DEBUG级别 end-->
@@ -75,24 +69,6 @@
         <logger name="com.dimpt.information.system.interceptor.HttpAuthInterceptor" level="DEBUG" additivity="false">
             <AppenderRef ref="Console"/>
         </logger>
-
-        <!-- 关键：开启 JAX-WS SOAP 消息日志 -->
-        <Logger name="com.sun.xml.ws.transport.http.client.HttpTransportPipe" level="DEBUG">
-                <AppenderRef ref="Console"/>
-        </Logger>
-
-        <Logger name="com.sun.xml.ws.transport.http.HttpAdapter" level="DEBUG">
-                <AppenderRef ref="Console"/>
-        </Logger>
-
-        <!-- 可选：也开启消息内容（XML payload） -->
-        <Logger name="com.sun.xml.ws.message" level="DEBUG">
-                <AppenderRef ref="Console"/>
-        </Logger>
-
-        <Logger name="com.sun.xml.ws.server" level="DEBUG">
-                <AppenderRef ref="Console"/>
-        </Logger>
 
         <Root level="WARN">
             <!-- 需额外查看spring mybatics 等日志到控制台, 并可修改Console Appender为DEBUG级别 start-->

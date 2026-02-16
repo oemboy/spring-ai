@@ -1,7 +1,0 @@
-services:
-  pgvector-db-test:
-    image: 'pgvector/pgvector:pg18-trixie'
-    environment:
-      - 'POSTGRES_DB=ailab'
-      - 'POSTGRES_PASSWORD=Abc110430#'
-      - 'POSTGRES_USER=rag_user'

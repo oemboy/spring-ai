@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:${random.port}/ailab?currentSchema=ailab
+  docker:
+    compose:
+      enabled: true
+      # 每次停止应用时，自动关掉 Docker 容器（可选）   start_only
+      lifecycle-management: start_and_stop
+      # 指定读取哪个 compose 文件
+      file: compose-test.yaml
+      readiness:
+        wait: always
+        timeout: 2m
+      skip:
+        in-tests: false
+  flyway:
+    enabled: true
+    clean-disabled: false
+    schemas: ailab, public
+    locations: classpath:db/migration
+
+logging:
+  config: classpath:log4j2-test.xml

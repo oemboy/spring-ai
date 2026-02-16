@@ -1,29 +1,18 @@
 
 package net.platform.ai;
 
+import net.platform.center.cfg.http5.EnableCustomHttpClient;
+import net.platform.center.cfg.redis.EnableCustomRedis;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.flyway.FlywayMigrationStrategy;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
-
-import net.platform.center.cfg.http5.EnableCustomHttpClient;
 
 @SpringBootApplication
+@EnableCustomRedis
 @EnableCustomHttpClient
 public class SpringAiApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringAiApplication.class, args);
-    }
-
-    @Bean
-    @Profile("h2")
-    public FlywayMigrationStrategy cleanMigrationStrategy() {
-        return flyway -> {
-            flyway.clean();
-            flyway.migrate();
-        };
     }
 
 }

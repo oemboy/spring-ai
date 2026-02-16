@@ -1,18 +1,16 @@
 
 package net.platform.ai;
 
-import org.junit.jupiter.api.Test;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
+@Slf4j
 @SpringBootTest
-@ActiveProfiles({"h2"})
+@ActiveProfiles({"test"})
 @ContextConfiguration(classes = SpringAiApplication.class)
-class SpringAiApplicationTests {
+public abstract class SpringAiApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
 
 }
