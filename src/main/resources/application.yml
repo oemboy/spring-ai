@@ -26,6 +26,11 @@ spring:
           max-wait: 3000
           max-idle: 8
           min-idle: 8
+  docker:
+    compose:
+      enabled: false
+  flyway:
+    enabled: false
 
 
 

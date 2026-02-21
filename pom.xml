@@ -204,8 +204,39 @@
         <finalName>spring-ai</finalName>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </path>
+                    </annotationProcessorPaths>
+                    <encoding>UTF-8</encoding>
+                    <verbose>true</verbose>
+                    <showWarnings>true</showWarnings>
+                    <compilerArgs>
+                        <arg>-Xlint:unchecked</arg>
+                        <arg>-Xlint:deprecation</arg>
+                    </compilerArgs>
+                    <release>${java.version}</release>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>net.platform.ai.SpringAiApplication</mainClass>
+                    <layout>JAR</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -214,16 +245,51 @@
                     <!--suppress UnresolvedMavenProperty ${surefireArgLine} -->
                     <argLine>-Xms512m -Xmx3072m -Dfile.encoding=UTF-8 -XX:+EnableDynamicAgentLoading -Xshare:off
                     </argLine>
-<!--                    <useFile>false</useFile>-->
-<!--                    <redirectTestOutputToFile>false</redirectTestOutputToFile>-->
-<!--                    <forkNode implementation="org.apache.maven.plugin.surefire.extensions.SurefireForkNodeFactory"/>-->
-<!--                    <forkedProcessExitTimeoutInSeconds>30</forkedProcessExitTimeoutInSeconds>-->
-<!--                    <parallel>classes</parallel>-->
-<!--                    <threadCount>4</threadCount>-->
+                    <!--                    <useFile>false</useFile>-->
+                    <!--                    <redirectTestOutputToFile>false</redirectTestOutputToFile>-->
+                    <!--                    <forkNode implementation="org.apache.maven.plugin.surefire.extensions.SurefireForkNodeFactory"/>-->
+                    <!--                    <forkedProcessExitTimeoutInSeconds>30</forkedProcessExitTimeoutInSeconds>-->
+                    <!--                    <parallel>classes</parallel>-->
+                    <!--                    <threadCount>4</threadCount>-->
                     <excludedGroups>mysql,integration</excludedGroups>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>native</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <version>0.11.4</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <mainClass>net.platform.ai.SpringAiApplication</mainClass>
+                            <imageName>ai-platform</imageName>
+                            <buildArgs>
+                                <arg>-H:IncludeResources=.*/log4j2-*.xml</arg>
+                                <arg>-H:+UnlockExperimentalVMOptions</arg>
+                                <arg>-H:+ReportExceptionStackTraces</arg>
+                                <arg>-J-Xmx8g</arg>
+                            </buildArgs>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>build-native</id>
+                                <goals>
+                                    <goal>compile-no-fork</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

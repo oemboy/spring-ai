@@ -36,7 +36,7 @@
                 hostAddress : 本地ip地址
              -->
             <PatternLayout charset="utf-8"
-                           pattern="%d{yyyy-MM-dd 'at' HH:mm:ss.SSS}|%t|%X{TRANSIDO}|%-5level|%class{36}|%L|%M|%msg%xEx%n"/>
+                           pattern="%d{yyyy-MM-dd 'at' HH:mm:ss.SSS}|%t|%X{TRANSIDO}|%-5level|%class{1}|%L|%M|%msg%xEx%n"/>
         </Console>
     </Appenders>
 

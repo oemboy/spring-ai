@@ -1,4 +1,5 @@
 #!/bin/bash
+./target/ai-platform --spring.profiles.active=dev
 #  -e AGENT_PATH=/opt/skywalking/agent/skywalking-agent.jar \
 docker run -d \
   --name information \

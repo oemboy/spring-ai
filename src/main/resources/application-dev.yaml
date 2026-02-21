@@ -7,3 +7,6 @@ spring:
     redis:
       host: localhost
       port: 6379
+
+logging:
+  config: classpath:log4j2-dev.xml

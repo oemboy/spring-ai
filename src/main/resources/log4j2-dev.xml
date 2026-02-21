@@ -36,7 +36,7 @@
                 hostAddress : 本地ip地址
              -->
             <PatternLayout charset="utf-8"
-                           pattern="%d{yyyy-MM-dd 'at' HH:mm:ss.SSS}|%t|%X{TRANSIDO}|%-5level|%class{36}|%L|%M|%msg%xEx%n"/>
+                           pattern="%d{yyyy-MM-dd 'at' HH:mm:ss.SSS}|%t|%X{TRANSIDO}|%-5level|%class{1}|%L|%M|%msg%xEx%n"/>
         </Console>
         <!--
             循环日志文件：日志文件大于阀值的时候，就开始写一个新的日志文件
@@ -57,7 +57,7 @@
                 <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
             <PatternLayout charset="utf-8"
-                           pattern="%d{yyyy-MM-dd 'at' HH:mm:ss.SSS}|%t|%X{TRANSIDO}|%-5level|%class{36}|%L|%M|%msg%xEx%n"/>
+                           pattern="%d{yyyy-MM-dd 'at' HH:mm:ss.SSS}|%t|%X{TRANSIDO}|%-5level|%class{1}|%L|%M|%msg%xEx%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
                 <SizeBasedTriggeringPolicy size="10MB"/>
@@ -72,7 +72,7 @@
                 <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
             <PatternLayout charset="utf-8"
-                           pattern="%d{yyyy-MM-dd 'at' HH:mm:ss.SSS}|%t|%X{TRANSIDO}|%-5level|%class{36}|%L|%M|%msg%xEx%n"/>
+                           pattern="%d{yyyy-MM-dd 'at' HH:mm:ss.SSS}|%t|%X{TRANSIDO}|%-5level|%class{1}|%L|%M|%msg%xEx%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
                 <SizeBasedTriggeringPolicy size="1MB"/>
@@ -92,7 +92,7 @@
                             <KeyValuePair key="OffType" value="OFF"/>
                         </DynamicThresholdFilter>
                         <PatternLayout
-                                pattern="%d{yyyy-MM-dd 'at' HH:mm:ss.SSS}|%t|%X{TRANSIDO}|%-5level|%class{36}|%L|%M|%msg%xEx%n"/>
+                                pattern="%d{yyyy-MM-dd 'at' HH:mm:ss.SSS}|%t|%X{TRANSIDO}|%-5level|%class{1}|%L|%M|%msg%xEx%n"/>
                         <Policies>
                             <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
                             <SizeBasedTriggeringPolicy size="50MB"/>
